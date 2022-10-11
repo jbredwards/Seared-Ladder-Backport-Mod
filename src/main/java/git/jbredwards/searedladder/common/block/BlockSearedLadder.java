@@ -50,24 +50,24 @@ public class BlockSearedLadder extends BlockEnumSmeltery<BlockSearedLadder.Type>
     @Nonnull public static final AxisAlignedBB BOTTOM_BOX = box(0, 0, 0, 16, 2, 16);
     @Nonnull public static final List<AxisAlignedBB>
             NORTH_BOX = ImmutableList.of(
-                    box(0,  2, 2, 16, 16, 16),
-                    box(14, 2, 0, 16, 16, 2),
-                    box(0,  2, 0, 2,  16, 2)
+                    box(0,  0, 2, 16, 16, 16),
+                    box(14, 0, 0, 16, 16, 2),
+                    box(0,  0, 0, 2,  16, 2)
             ),
             SOUTH_BOX = ImmutableList.of(
-                    box(0,  2, 0,  16, 16, 14),
-                    box(0,  2, 14, 2,  16, 16),
-                    box(14, 2, 14, 16, 16, 16)
+                    box(0,  0, 0,  16, 16, 14),
+                    box(0,  0, 14, 2,  16, 16),
+                    box(14, 0, 14, 16, 16, 16)
             ),
             EAST_BOX = ImmutableList.of(
-                    box(0,  2, 0,  14, 16, 16),
-                    box(14, 2, 14, 16, 16, 16),
-                    box(14, 2, 0,  16, 16, 2)
+                    box(0,  0, 0,  14, 16, 16),
+                    box(14, 0, 14, 16, 16, 16),
+                    box(14, 0, 0,  16, 16, 2)
             ),
             WEST_BOX = ImmutableList.of(
-                    box(2, 2, 0,  16, 16, 16),
-                    box(0, 2, 0,  2,  16, 2),
-                    box(0, 2, 14, 2,  16, 16));
+                    box(2,  0, 0,  16, 16, 16),
+                    box(0,  0, 0,  2,  16, 2),
+                    box(0,  0, 14, 2,  16, 16));
 
     public BlockSearedLadder(@Nonnull Material material) { super(material, TYPE, Type.class); }
 

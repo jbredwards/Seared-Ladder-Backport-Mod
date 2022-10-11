@@ -1,24 +1,25 @@
 {
-  "conditions": [
+  "conditions":[
     {
-      "type": "tconstruct:is_pulse_loaded",
-      "pulse_name": "TinkerSmeltery"
+      "type":"tconstruct:is_pulse_loaded",
+      "pulse_name":"TinkerSmeltery"
     }
   ],
   "type":"minecraft:crafting_shaped",
   "group":"tconstruct:seared_block",
   "pattern":[
-    "b b",
-    "b b",
-    "###"
+    "I I",
+    "I I",
+    "BBB"
   ],
   "key":{
-    "b":{
+    "I":{
       "item":"tconstruct:materials",
       "data":0
     },
-    "#":{
-      "item":"tconstruct:seared"
+    "B":{
+      "item":"tconstruct:seared",
+      "data":32767
     }
   },
   "result":{

@@ -2,11 +2,15 @@ package git.jbredwards.searedladder;
 
 import com.google.common.collect.ImmutableSet;
 import git.jbredwards.searedladder.common.init.ModBlocks;
+import git.jbredwards.searedladder.common.init.ModItems;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import slimeknights.tconstruct.library.TinkerRegistry;
+import slimeknights.tconstruct.shared.TinkerFluids;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 
 import javax.annotation.Nonnull;
@@ -32,5 +36,10 @@ public final class Main
                 .addAll(TinkerSmeltery.validSmelteryBlocks)
                 .add(ModBlocks.SEARED_LADDER)
                 .build();
+    }
+
+    @Mod.EventHandler
+    static void postInit(@Nonnull FMLPostInitializationEvent event) {
+        TinkerRegistry.registerMelting(ModItems.SEARED_LADDER, TinkerFluids.searedStone, 288);
     }
 }
