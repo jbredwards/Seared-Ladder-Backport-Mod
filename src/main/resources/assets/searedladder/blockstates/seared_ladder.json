@@ -1,0 +1,22 @@
+{
+    "forge_marker":1,
+    "defaults":{
+        "model":"searedladder:ladder",
+        "textures":{
+            "top":"tconstruct:blocks/smeltery/seared_brick_fancy",
+            "side":"searedladder:blocks/ladder",
+            "bottom":"searedladder:blocks/ladder"
+        }
+    },
+    "variants":{
+        "inventory":[{}],
+        "bottom=false,facing=north":[{}],
+        "bottom=false,facing=south":[{"y": 180}],
+        "bottom=false,facing=west":[{"y": 270}],
+        "bottom=false,facing=east":[{"y": 90}],
+        "bottom=true,facing=north":[{"model":"searedladder:ladder_base"}],
+        "bottom=true,facing=south":[{"model":"searedladder:ladder_base","y": 180}],
+        "bottom=true,facing=west":[{"model":"searedladder:ladder_base","y": 270}],
+        "bottom=true,facing=east":[{"model":"searedladder:ladder_base","y": 90}]
+    }
+}
