@@ -154,18 +154,18 @@ public class BlockSearedLadder extends BlockEnumSmeltery<BlockSearedLadder.Type>
                 .collect(Collectors.toList());
 
         if(list.isEmpty()) return null;
-        RayTraceResult closest = null;
-        double dist = Double.MAX_VALUE;
+        RayTraceResult furthest = null;
+        double dist = -1;
 
         for(RayTraceResult trace : list) {
             final double newDist = trace.hitVec.squareDistanceTo(end);
-            if(newDist < dist) {
-                closest = trace;
+            if(newDist > dist) {
+                furthest = trace;
                 dist = newDist;
             }
         }
 
-        return closest;
+        return furthest;
     }
 
     @Nonnull

@@ -10,6 +10,6 @@ import javax.annotation.Nonnull;
 public final class Constants
 {
     @Nonnull
-    public static final String MODID = "searedladder", NAME = "Seared Ladder", VERSION = "1.1",
+    public static final String MODID = "searedladder", NAME = "Seared Ladder", VERSION = "1.1.1",
             DEPENDENCIES = "required-after:tconstruct;required-after:mantle;";
 }
