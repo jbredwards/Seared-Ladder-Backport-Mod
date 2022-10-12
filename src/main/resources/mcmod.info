@@ -1,8 +1,7 @@
 [{
   "modid": "searedladder",
-  "name": "Seared Ladder Backport",
+  "name": "Seared Ladder",
   "description": "Backports the seared ladder from tconstruct 1.16+.",
-  "version": "1.0",
   "mcversion": "1.12.2",
   "url": "https://github.com/jbredwards/Seared-Ladder-Backport-Mod",
   "authorList": ["jbredwards"]

@@ -99,16 +99,25 @@ public class BlockSearedLadder extends BlockEnumSmeltery<BlockSearedLadder.Type>
         return state.withProperty(BOTTOM, shouldBeBottom(state, worldIn.getBlockState(pos.down())));
     }
 
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean shouldSideBeRendered(@Nonnull IBlockState blockState, @Nonnull IBlockAccess blockAccess, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
+        return side == EnumFacing.UP && isAssociatedBlock(blockAccess.getBlockState(pos.up()).getBlock())
+                || super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+    }
+
     @Nonnull
     @Override
     public BlockFaceShape getBlockFaceShape(@Nonnull IBlockAccess worldIn, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EnumFacing face) {
-        return face.getAxis().isVertical() || state.getValue(FACING) == face ? BlockFaceShape.UNDEFINED : BlockFaceShape.SOLID;
+        if(face == EnumFacing.DOWN && state.getValue(BOTTOM)) return BlockFaceShape.SOLID;
+        return face.getAxis().isVertical() || state.getValue(FACING) == face
+                ? BlockFaceShape.UNDEFINED : BlockFaceShape.SOLID;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, @Nonnull List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.GRAY + I18n.format("tile.tconstruct.seared.tooltip"));
+        tooltip.add(TextFormatting.GRAY + I18n.format("tile.searedladder.seared_ladder.tooltip"));
     }
 
     @Override
@@ -125,9 +134,6 @@ public class BlockSearedLadder extends BlockEnumSmeltery<BlockSearedLadder.Type>
 
     @Override
     public boolean isFullCube(@Nonnull IBlockState state) { return false; }
-
-    @Override
-    public boolean isOpaqueCube(@Nonnull IBlockState state) { return false; }
 
     @Override
     public boolean isLadder(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EntityLivingBase entity) {
@@ -148,18 +154,18 @@ public class BlockSearedLadder extends BlockEnumSmeltery<BlockSearedLadder.Type>
                 .collect(Collectors.toList());
 
         if(list.isEmpty()) return null;
-        RayTraceResult furthest = null;
-        double dist = 0;
+        RayTraceResult closest = null;
+        double dist = Double.MAX_VALUE;
 
         for(RayTraceResult trace : list) {
             final double newDist = trace.hitVec.squareDistanceTo(end);
-            if(newDist > dist) {
-                furthest = trace;
+            if(newDist < dist) {
+                closest = trace;
                 dist = newDist;
             }
         }
 
-        return furthest;
+        return closest;
     }
 
     @Nonnull
@@ -184,7 +190,7 @@ public class BlockSearedLadder extends BlockEnumSmeltery<BlockSearedLadder.Type>
     }
 
     public boolean shouldBeBottom(@Nonnull IBlockState state, @Nonnull IBlockState down) {
-        return !(down.getBlock() instanceof BlockSearedLadder) || down.getValue(FACING) != state.getValue(FACING);
+        return !isAssociatedBlock(down.getBlock()) || down.getValue(FACING) != state.getValue(FACING);
     }
 
     @Nonnull

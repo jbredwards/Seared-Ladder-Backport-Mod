@@ -27,13 +27,13 @@ import java.util.Objects;
 public final class RegistryHandler
 {
     @SubscribeEvent
-    public static void registerBlock(@Nonnull RegistryEvent.Register<Block> event) {
+    static void registerBlock(@Nonnull RegistryEvent.Register<Block> event) {
         event.getRegistry().register(ModBlocks.SEARED_LADDER.setRegistryName(Constants.MODID, "seared_ladder")
                 .setTranslationKey("searedladder.seared_ladder"));
     }
 
     @SubscribeEvent
-    public static void registerItem(@Nonnull RegistryEvent.Register<Item> event) {
+    static void registerItem(@Nonnull RegistryEvent.Register<Item> event) {
         event.getRegistry().register(ModItems.SEARED_LADDER.setRegistryName(Constants.MODID, "seared_ladder")
                 .setTranslationKey("searedladder.seared_ladder"));
 
@@ -42,7 +42,7 @@ public final class RegistryHandler
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public static void registerModels(@Nonnull ModelRegistryEvent event) {
+    static void registerModels(@Nonnull ModelRegistryEvent event) {
         ModelLoader.setCustomStateMapper(ModBlocks.SEARED_LADDER,
                 new StateMap.Builder().ignore(BlockSearedLadder.TYPE).build());
 
