@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -14,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -24,8 +22,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import slimeknights.mantle.block.EnumBlock;
 import slimeknights.tconstruct.smeltery.block.BlockEnumSmeltery;
+import slimeknights.tconstruct.smeltery.block.BlockSearedGlass;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,11 +40,9 @@ import static net.minecraft.block.BlockHorizontal.FACING;
  * @author jbred
  *
  */
-public class BlockSearedLadder extends BlockEnumSmeltery<BlockSearedLadder.Type>
+public class BlockSearedLadder extends BlockEnumSmeltery<BlockSearedGlass.GlassType>
 {
-    @Nonnull public static final PropertyEnum<Type> TYPE = PropertyEnum.create("type", Type.class);
     @Nonnull public static final PropertyBool BOTTOM = PropertyBool.create("bottom");
-
     @Nonnull public static final AxisAlignedBB BOTTOM_BOX = box(0, 0, 0, 16, 2, 16);
     @Nonnull public static final List<AxisAlignedBB>
             NORTH_BOX = ImmutableList.of(
@@ -69,12 +65,14 @@ public class BlockSearedLadder extends BlockEnumSmeltery<BlockSearedLadder.Type>
                     box(0,  0, 0,  2,  16, 2),
                     box(0,  0, 14, 2,  16, 16));
 
-    public BlockSearedLadder(@Nonnull Material material) { super(material, TYPE, Type.class); }
+    public BlockSearedLadder(@Nonnull Material material) {
+        super(material, BlockSearedGlass.TYPE, BlockSearedGlass.GlassType.class);
+    }
 
     @Nonnull
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, TYPE, BOTTOM, FACING);
+        return new BlockStateContainer(this, BlockSearedGlass.TYPE, BOTTOM, FACING);
     }
 
     @Override
@@ -101,9 +99,13 @@ public class BlockSearedLadder extends BlockEnumSmeltery<BlockSearedLadder.Type>
 
     @SideOnly(Side.CLIENT)
     @Override
-    public boolean shouldSideBeRendered(@Nonnull IBlockState blockState, @Nonnull IBlockAccess blockAccess, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
-        return side == EnumFacing.UP && isAssociatedBlock(blockAccess.getBlockState(pos.up()).getBlock())
-                || super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+    public boolean doesSideBlockRendering(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing face) {
+        return state.isSideSolid(world, pos, face);
+    }
+
+    @Override
+    public boolean isSideSolid(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
+        return state.getBlockFaceShape(world, pos, side) == BlockFaceShape.SOLID;
     }
 
     @Nonnull
@@ -196,17 +198,5 @@ public class BlockSearedLadder extends BlockEnumSmeltery<BlockSearedLadder.Type>
     @Nonnull
     static AxisAlignedBB box(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
         return new AxisAlignedBB(minX / 16, minY / 16, minZ / 16, maxX / 16, maxY / 16, maxZ / 16);
-    }
-
-    //needed for BlockEnumSmeltery
-    public enum Type implements IStringSerializable, EnumBlock.IEnumMeta {
-        NORMAL;
-
-        @Nonnull
-        @Override
-        public String getName() { return "normal"; }
-
-        @Override
-        public int getMeta() { return 0; }
     }
 }

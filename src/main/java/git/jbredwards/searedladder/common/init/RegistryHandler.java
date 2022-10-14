@@ -1,7 +1,6 @@
 package git.jbredwards.searedladder.common.init;
 
 import git.jbredwards.searedladder.Constants;
-import git.jbredwards.searedladder.common.block.BlockSearedLadder;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
@@ -14,6 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
+import slimeknights.tconstruct.smeltery.block.BlockSearedGlass;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -44,7 +44,7 @@ public final class RegistryHandler
     @SubscribeEvent
     static void registerModels(@Nonnull ModelRegistryEvent event) {
         ModelLoader.setCustomStateMapper(ModBlocks.SEARED_LADDER,
-                new StateMap.Builder().ignore(BlockSearedLadder.TYPE).build());
+                new StateMap.Builder().ignore(BlockSearedGlass.TYPE).build());
 
         ModelLoader.setCustomModelResourceLocation(ModItems.SEARED_LADDER, 0, new ModelResourceLocation(
                 Objects.requireNonNull(ModItems.SEARED_LADDER.getRegistryName()), "inventory"));
